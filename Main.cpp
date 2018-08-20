@@ -9,14 +9,19 @@ int main(int argc, char **argv)
 	CarFactory rally("Rally");
 	rally.self()->start();
 
-	CarFactory electric("Electric");
-	electric.self()->start();
+	// CarFactory electric("Electric");
+	std::shared_ptr<Car> electric(new ElectricCar);
+	electric->start();
 
 	std::this_thread::sleep_for( std::chrono::seconds(5) );
 
-	electric.self()->stopThread();
+	electric->stopThread();
 
-	while(true);
+	std::this_thread::sleep_for( std::chrono::seconds(5) );
+
+	rally.self()->stopThread();
+
+	rally.self()->~Car();
 
 	return 0;
 }
